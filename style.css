@@ -45,6 +45,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    touch-action: manipulation;
 }
 
 body {
@@ -53,6 +58,7 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
+    -webkit-text-size-adjust: 100%;
 }
 
 .container {
@@ -119,6 +125,8 @@ body {
     justify-content: center;
     transition: var(--transition);
     text-decoration: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .btn-icon:hover {
@@ -169,12 +177,21 @@ body {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.article-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--accent);
+@media (hover: hover) {
+    .article-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+        border-color: var(--accent);
+    }
+}
+
+.article-card:active {
+    transform: scale(0.98);
 }
 
 .article-card.completed {
@@ -248,12 +265,21 @@ body {
     text-decoration: none;
     color: var(--text-primary);
     transition: var(--transition);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.action-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--accent);
+@media (hover: hover) {
+    .action-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+        border-color: var(--accent);
+    }
+}
+
+.action-card:active {
+    transform: scale(0.98);
 }
 
 .action-icon {
@@ -316,6 +342,9 @@ body {
     transition: var(--transition);
     font-size: 14px;
     color: var(--text-secondary);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .article-item:hover {
@@ -370,6 +399,10 @@ body {
     font-weight: 500;
     border-radius: var(--radius-sm);
     transition: var(--transition);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .tab-btn:hover {
@@ -435,6 +468,9 @@ body {
     font-size: 14px;
     font-weight: 500;
     transition: var(--transition);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .btn-audio:hover {
@@ -509,6 +545,8 @@ body {
     align-items: center;
     justify-content: center;
     transition: var(--transition);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .word-speak-btn:hover {
@@ -587,6 +625,9 @@ body {
     text-align: left;
     font-size: 14px;
     transition: var(--transition);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .option-btn:hover {
@@ -819,6 +860,10 @@ body {
     font-size: 14px;
     font-weight: 600;
     transition: var(--transition);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .btn-primary:hover {

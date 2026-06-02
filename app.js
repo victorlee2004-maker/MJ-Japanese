@@ -3,6 +3,30 @@
 //  功能：主题切换 / 页面路由 / 训练交互 / 进度存储
 // ============================================================
 
+// ===== 全局读音播放函数（必须在 loadArticle 之前定义）=====
+window.speakWord = function(text, btnEl) {
+  speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ja-JP';
+  utter.rate = 0.85;
+  if (btnEl) {
+    btnEl.classList.add('speaking');
+    utter.onend = () => btnEl.classList.remove('speaking');
+    utter.onerror = () => btnEl.classList.remove('speaking');
+  }
+  speechSynthesis.speak(utter);
+};
+
+window.normalizeWord = function(word) {
+  // 提取括号内的读音，如 "自己紹介（じこしょうかい）" → "じこしょうかい"
+  const match = word.match(/[（(](.+?)[）)]/);
+  return match ? match[1] : word;
+};
+
+window.escapeAttr = function(s) {
+  return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+};
+
 // ===== 数据存储 =====
 const App = {
   key: 'mj_japanese_data',
@@ -128,14 +152,17 @@ function loadArticle(id) {
     `).join('');
   }
 
-  // 重点词汇
+  // 重点词汇（使用已定义的全局函数）
   const wordsContent = document.getElementById('wordsContent');
   if (wordsContent && article.vocab) {
-    wordsContent.innerHTML = article.vocab.map((w, idx) => `
+    wordsContent.innerHTML = article.vocab.map((w, idx) => {
+      const reading = window.normalizeWord(w.word);
+      const safeReading = window.escapeAttr(reading);
+      return `
       <div class="word-card">
         <div class="word-main">
           <span class="word-japanese">${w.word}</span>
-          <button class="word-speak-btn" onclick="speakWord('${escapeAttr(normalizeWord(w.word))}', this)" title="播放读音">
+          <button class="word-speak-btn" onclick="window.speakWord('${safeReading}', this)" title="播放读音">
             <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
               <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
             </svg>
@@ -143,35 +170,11 @@ function loadArticle(id) {
         </div>
         <div class="word-info">
           <div class="word-meaning">${w.meaning || ''}</div>
-          <div class="word-reading">${w.pos || ''}  <span class="word-speak-hint" onclick="speakWord('${escapeAttr(normalizeWord(w.word))}')">🔊</span></div>
+          <div class="word-reading">${w.pos || ''} <span class="word-speak-hint" onclick="window.speakWord('${safeReading}')">🔊</span></div>
         </div>
       </div>
-    `).join('');
-  }
-  
-  // 绑定全局读音播放函数
-  if (!window._speakBound) {
-    window._speakBound = true;
-    window.speakWord = function(text, btnEl) {
-      speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = 'ja-JP';
-      utter.rate = 0.85;
-      if (btnEl) {
-        btnEl.classList.add('speaking');
-        utter.onend = () => btnEl.classList.remove('speaking');
-        utter.onerror = () => btnEl.classList.remove('speaking');
-      }
-      speechSynthesis.speak(utter);
-    };
-    window.normalizeWord = function(word) {
-      // 提取括号内的读音，如 "自己紹介（じこしょうかい）" → "じこしょうかい"
-      const match = word.match(/[（(](.+?)[）)]/);
-      return match ? match[1] : word;
-    };
-    window.escapeAttr = function(s) {
-      return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'<').replace(/>/g,'>');
-    };
+    `;
+    }).join('');
   }
 
   // 训练指南（听力重点 + 背诵要求）
@@ -193,7 +196,7 @@ function loadArticle(id) {
     html += `<div class="guide-section">
       <h3 class="guide-title">十篇攻克法训练流程</h3>
       <ol class="guide-list">
-        <li><strong>聽解</strong>：盲听原文，不看文本 → 捕捉关键词 → 推测主题</li>
+        <li><strong>聴解</strong>：盲听原文，不看文本 → 捕捉关键词 → 推测主题</li>
         <li><strong>単語</strong>：逐词学习，结合上下文猜测词义 → AI验证 → 造句应用</li>
         <li><strong>暗記</strong>：逐句 → 逐段 → 全文 → 原速背诵</li>
         <li><strong>出力</strong>：用自己的话复述原文，优先使用原文句型与表达</li>
