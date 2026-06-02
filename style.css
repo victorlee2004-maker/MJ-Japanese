@@ -479,15 +479,66 @@ body {
     border-radius: var(--radius-sm);
     padding: 16px;
     display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
     align-items: start;
+}
+
+.word-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .word-japanese {
     font-size: 18px;
     font-weight: 600;
     color: var(--accent);
+}
+
+.word-speak-btn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    color: var(--accent);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.word-speak-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.word-speak-btn.speaking {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    animation: pulse-speak 0.6s ease-in-out infinite;
+}
+
+@keyframes pulse-speak {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+.word-speak-hint {
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    margin-left: 4px;
+}
+
+.word-speak-hint:hover {
+    opacity: 1;
 }
 
 .word-info {

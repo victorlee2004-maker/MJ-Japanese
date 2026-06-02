@@ -131,15 +131,47 @@ function loadArticle(id) {
   // 重点词汇
   const wordsContent = document.getElementById('wordsContent');
   if (wordsContent && article.vocab) {
-    wordsContent.innerHTML = article.vocab.map(w => `
+    wordsContent.innerHTML = article.vocab.map((w, idx) => `
       <div class="word-card">
-        <div class="word-japanese">${w.word}</div>
+        <div class="word-main">
+          <span class="word-japanese">${w.word}</span>
+          <button class="word-speak-btn" onclick="speakWord('${escapeAttr(normalizeWord(w.word))}', this)" title="播放读音">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+          </button>
+        </div>
         <div class="word-info">
           <div class="word-meaning">${w.meaning || ''}</div>
-          <div class="word-reading">${w.pos || ''}</div>
+          <div class="word-reading">${w.pos || ''}  <span class="word-speak-hint" onclick="speakWord('${escapeAttr(normalizeWord(w.word))}')">🔊</span></div>
         </div>
       </div>
     `).join('');
+  }
+  
+  // 绑定全局读音播放函数
+  if (!window._speakBound) {
+    window._speakBound = true;
+    window.speakWord = function(text, btnEl) {
+      speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'ja-JP';
+      utter.rate = 0.85;
+      if (btnEl) {
+        btnEl.classList.add('speaking');
+        utter.onend = () => btnEl.classList.remove('speaking');
+        utter.onerror = () => btnEl.classList.remove('speaking');
+      }
+      speechSynthesis.speak(utter);
+    };
+    window.normalizeWord = function(word) {
+      // 提取括号内的读音，如 "自己紹介（じこしょうかい）" → "じこしょうかい"
+      const match = word.match(/[（(](.+?)[）)]/);
+      return match ? match[1] : word;
+    };
+    window.escapeAttr = function(s) {
+      return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'<').replace(/>/g,'>');
+    };
   }
 
   // 训练指南（听力重点 + 背诵要求）
