@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJ日语 - 十篇攻克法</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icons/icon-192.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">日</span>
+                <div class="logo-text">
+                    <h1>MJ日语</h1>
+                    <p class="subtitle">十篇攻克法 · 日语学习</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="themeToggle" title="切换主题">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="welcome-section">
+                <h2 class="welcome-title">开始你的日语学习之旅</h2>
+                <p class="welcome-desc">通过十篇精选文章，系统掌握日语核心词汇和语法</p>
+            </div>
+
+            <div class="article-grid" id="articleGrid">
+                <!-- 文章卡片将通过JS动态生成 -->
+            </div>
+
+            <div class="quick-actions">
+                <a href="train.html" class="action-card">
+                    <div class="action-icon">▶</div>
+                    <div class="action-text">
+                        <h3>开始训练</h3>
+                        <p>选择文章开始学习</p>
+                    </div>
+                </a>
+                <a href="progress.html" class="action-card">
+                    <div class="action-icon">📊</div>
+                    <div class="action-text">
+                        <h3>学习进度</h3>
+                        <p>查看你的学习数据</p>
+                    </div>
+                </a>
+                <a href="summary.html" class="action-card">
+                    <div class="action-icon">📝</div>
+                    <div class="action-text">
+                        <h3>学习总结</h3>
+                        <p>回顾所学内容</p>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>MJ日语 · 十篇攻克法 · 系统掌握日语</p>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderArticleGrid();
+        });
+    </script>
+</body>
+</html>

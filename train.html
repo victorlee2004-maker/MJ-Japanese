@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>训练 - MJ日语</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icons/icon-192.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">日</span>
+                <div class="logo-text">
+                    <h1>日语训练</h1>
+                    <p class="subtitle" id="articleTitle">选择文章开始</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="themeToggle" title="切换主题">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+                <a href="index.html" class="btn-icon" title="Home">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="train-layout">
+                <aside class="sidebar">
+                    <h3>文章列表</h3>
+                    <div class="article-list" id="articleList">
+                        <!-- 文章列表动态生成 -->
+                    </div>
+                </aside>
+
+                <section class="content-area">
+                    <div class="content-placeholder" id="contentPlaceholder">
+                        <div class="placeholder-icon">📖</div>
+                        <h2>选择一篇文章开始训练</h2>
+                        <p>从左侧列表选择文章，或点击首页的文章卡片</p>
+                    </div>
+
+                    <div class="content-active" id="contentActive" style="display:none;">
+                        <div class="content-tabs">
+                            <button class="tab-btn active" data-tab="japanese">日语原文</button>
+                            <button class="tab-btn" data-tab="translation">中文翻译</button>
+                            <button class="tab-btn" data-tab="analysis">语法分析</button>
+                            <button class="tab-btn" data-tab="words">重点词汇</button>
+                            <button class="tab-btn" data-tab="practice">训练指南</button>
+                        </div>
+
+                        <div class="tab-content" id="tabJapanese">
+                            <div class="article-content" id="japaneseContent"></div>
+                            <div class="audio-controls">
+                                <button class="btn-audio" id="btnPlayJapanese" title="播放日语音频">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon points="5 3 19 12 5 21 5 3"/>
+                                    </svg>
+                                    播放日语
+                                </button>
+                                <button class="btn-audio" id="btnPauseAudio" title="暂停">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <rect x="6" y="4" width="4" height="16"/>
+                                        <rect x="14" y="4" width="4" height="16"/>
+                                    </svg>
+                                    暂停
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="tabTranslation" style="display:none;">
+                            <div class="article-content" id="chineseContent"></div>
+                        </div>
+
+                        <div class="tab-content" id="tabAnalysis" style="display:none;">
+                            <div class="analysis-content" id="analysisContent"></div>
+                        </div>
+
+                        <div class="tab-content" id="tabWords" style="display:none;">
+                            <div class="words-content" id="wordsContent"></div>
+                        </div>
+
+                        <div class="tab-content" id="tabPractice" style="display:none;">
+                            <div class="practice-content" id="practiceContent"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initTrainPage();
+        });
+    </script>
+</body>
+</html>
