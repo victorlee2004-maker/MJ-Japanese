@@ -169,6 +169,7 @@ body {
 }
 
 .article-card {
+    display: block;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -180,6 +181,8 @@ body {
     touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
+    text-decoration: none;
+    color: inherit;
 }
 
 @media (hover: hover) {
@@ -336,12 +339,14 @@ body {
 }
 
 .article-item {
+    display: block;
     padding: 10px 12px;
     border-radius: var(--radius-sm);
     cursor: pointer;
     transition: var(--transition);
     font-size: 14px;
     color: var(--text-secondary);
+    text-decoration: none;
     touch-action: manipulation;
     user-select: none;
     -webkit-user-select: none;
@@ -350,6 +355,12 @@ body {
 .article-item:hover {
     background: var(--accent-bg);
     color: var(--accent);
+}
+
+.article-item:active {
+    background: var(--accent-bg);
+    color: var(--accent);
+    transform: scale(0.97);
 }
 
 .article-item.active {
@@ -434,6 +445,29 @@ body {
     font-size: 18px;
     line-height: 2.2;
     margin-bottom: 20px;
+}
+
+/* Sentence highlight for TTS playback */
+.japanese-text .sentence {
+    display: inline;
+    border-radius: 3px;
+    transition: background 0.2s ease, color 0.2s ease;
+    padding: 2px 0;
+}
+
+.japanese-text .sentence-active {
+    background: rgba(230, 57, 70, 0.18);
+    color: #c0172a;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(230, 57, 70, 0.25);
+}
+
+[data-theme="dark"] .japanese-text .sentence-active {
+    background: rgba(255, 107, 107, 0.25);
+    color: #ff8a8a;
+    box-shadow: 0 1px 4px rgba(255, 107, 107, 0.3);
 }
 
 .chinese-text {
@@ -573,9 +607,16 @@ body {
     opacity: 0.6;
     transition: opacity 0.2s;
     margin-left: 4px;
+    background: none;
+    border: none;
+    padding: 4px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1;
 }
 
-.word-speak-hint:hover {
+.word-speak-hint:hover,
+.word-speak-hint:active {
     opacity: 1;
 }
 
